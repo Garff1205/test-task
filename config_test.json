@@ -1,0 +1,8 @@
+{
+  "test": {
+    "web":{
+      "base_page": "https://www.w3schools.com/",
+      "start_page": "/sql/trysql.asp?filename=trysql_select_all"
+    }
+  }
+}
