@@ -1,10 +1,16 @@
 import json
 import os
+from distutils.util import strtobool
 
 config = None
 
-DOCKER_WEB_DRIVER = 'http://driver:4444/wd/hub'
+LOCAL_START = strtobool(os.getenv('LOCAL_START', 'True'))
 ENV = os.getenv('ENV', 'test')
+
+if LOCAL_START:
+    WEB_DRIVER_URL = 'http://localhost:4444/wd/hub'
+else:
+    WEB_DRIVER_URL = 'http://driver:4444/wd/hub'
 
 
 def load_config(file):
