@@ -13,3 +13,5 @@ services:
       - web_driver
     links:
       - web_driver:driver
+    environment:
+      LOCAL_START: False

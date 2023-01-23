@@ -1,7 +1,7 @@
 import allure
 from selenium import webdriver
 
-from conf import DOCKER_WEB_DRIVER, START_URL
+from conf import WEB_DRIVER_URL, START_URL
 from utils.ui.helpers.base import BaseHelper
 from utils.ui.pages.start_page import StartPage
 
@@ -27,7 +27,7 @@ class Application:
             options.add_argument('--allow-running-insecure-content')
             options.add_argument('--reduce-security-for-testing')
 
-            self.wd = webdriver.Remote(command_executor=DOCKER_WEB_DRIVER, options=options)
+            self.wd = webdriver.Remote(command_executor=WEB_DRIVER_URL, options=options)
 
         self.base = BaseHelper(self)
         self.start_page = StartPage(self)
