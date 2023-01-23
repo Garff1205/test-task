@@ -20,7 +20,7 @@ class QueriesCustomers:
     # Либо создать его копию и доработать ее.
 
     @staticmethod
-    def ADD_NEW_ROW(row_data: dict):
+    def ADD_NEW_ROW(table: str, row_data: dict):
         keys = f"({','.join(row_data.keys())})"
         vals = [[] for _ in range(len(row_data.values()))]
         for val in row_data.values():
@@ -37,7 +37,7 @@ class QueriesCustomers:
         else:
             ready_vals = [f"'{val}'" for val in row_data.values()]
         values = f"({','.join(ready_vals)})"
-        return f"INSERT INTO Customers {keys} VALUES {values};"
+        return f"INSERT INTO {table} {keys} VALUES {values};"
 
     @staticmethod
     def UPDATE_ROW(row_data: dict, condition):

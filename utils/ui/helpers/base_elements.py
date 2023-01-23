@@ -57,7 +57,7 @@ class Table:
         return self._data
 
     @allure.step('Найти строку по значению')
-    def find_by_value(self, column, value):
+    def find_by_value(self, column, value) -> any((dict, None)):
         for row in self.data():
             if row[column] == value:
                 return row

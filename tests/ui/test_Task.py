@@ -2,7 +2,7 @@ import pytest
 import random
 
 from utils.ui.Queries import QueriesCustomers
-from tests.ui.Data import NEW_ROW_DATA, UPDATED_ROW_DATA
+from tests.ui.Data import NEW_ROW_DATA, UPDATED_ROW_DATA, NEW_CATEGORY_DATA
 
 
 @pytest.mark.task
@@ -14,14 +14,15 @@ def test_contact_name_address_match(fixture_open_page, name='Giovanni Rovelli', 
 
 @pytest.mark.task
 def test_num_of_rows_with_city(fixture_open_page, city='London', expected=6):
+    fixture_open_page.start_page.restore_data()
     fixture_open_page.start_page.execute_query(QueriesCustomers.GET_BY_CITY(city))
     actual_rows = fixture_open_page.start_page.get_num_of_rows_in_table()
     assert actual_rows == expected, f'Количество строк не совпадает. Найдено {actual_rows} строк.'
 
 
 @pytest.mark.task
-def test_add_new_row_and_check(fixture_open_page, new_row=NEW_ROW_DATA):
-    fixture_open_page.start_page.execute_query(QueriesCustomers.ADD_NEW_ROW(new_row))
+def test_add_new_row_and_check(fixture_open_page, table='Customers', new_row=NEW_ROW_DATA):
+    fixture_open_page.start_page.execute_query(QueriesCustomers.ADD_NEW_ROW(table, new_row))
     fixture_open_page.start_page.wait_table_update()
     fixture_open_page.start_page.execute_query(QueriesCustomers.GET_ALL_DATA)
     key = random.choice(list(new_row.keys()))
@@ -56,3 +57,13 @@ def test_number_of_records_equal_to_table(fixture_open_page, city='London'):
     assert actual_rows == value_in_text, \
         f"Фактическое количество строк на странице {actual_rows} " \
         f"не совпадает с указанным наверху таблицы {value_in_text}"
+
+
+@pytest.mark.addition
+def test_add_new_row_and_check(fixture_open_page, table='Categories', new_row=NEW_CATEGORY_DATA, expected=9):
+    fixture_open_page.start_page.restore_data()
+    fixture_open_page.start_page.execute_query(QueriesCustomers.ADD_NEW_ROW(table, new_row))
+    fixture_open_page.start_page.wait_table_update()
+    categories_amount = fixture_open_page.start_page.get_num_of_records(table)
+    assert expected == categories_amount, f"Количество записей не совпало с ожидаемым (ожидаемое: {expected}," \
+                                          f"найденое: {categories_amount}"
