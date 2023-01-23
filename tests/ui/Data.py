@@ -7,6 +7,11 @@ NEW_ROW_DATA = {
     "Country": 'Asteria'
 }
 
+NEW_CATEGORY_DATA = {
+    "CategoryName": 'Dragons',
+    "Description": 'Living dragons for anyone'
+}
+
 UPDATED_ROW_DATA = {
     "CustomerName": 'Laisio Valie',
     "ContactName": 'Raniarin Vihollinen',

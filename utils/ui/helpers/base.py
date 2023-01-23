@@ -60,3 +60,7 @@ class BaseHelper:
     def get_text(self, locator):
         self.wait(locator)
         return self.find_element(*locator).text
+
+    @allure.step('Принять алерт')
+    def accept_alert(self):
+        self.app.wd.switch_to.alert.accept()
