@@ -1,18 +1,19 @@
-Для запуска достаточно клонировать репозиторий и запустить сервисы из файла docker_compose.
+To start, simply clone the repository and run the services from the docker_compose file.
 
-Если запускать сразу весь docker-compose то можно столкнуться с такой проблемой:
-    
-    При первом запуске несмотря на то, что контейнеру тестов приказано ждать поднятия контейнера с браузером,
-    тесты все равно могут постучаться в еще не поднявщийся браузер. Поэтому если при первом запуске все тесты упали,
-    стоит попробовать перезапустить только контейнер тестов.
-    
-    Причина этого в том, что ожидание реализуется на уровне контейнеров и контейнер с тестами начинает подниматься только
-    когда контейнер с браузером поднят, но в поднятом контейнере еще поднимается сам браузер, и до готовности браузера 
-    тесты могут успеть поднять контейнер и подняться сами, из-за этого и возникает проблема.
-    
-    Отдельно хочется отметить, что в CI такой проблемы не возникает, т.к. там как правильно инстансы браузера поднимаются 
-    в отдельной джобе предшествующей тестам.
+If you run the entire docker-compose at once, you may encounter the following problem:
 
-Однако можно избежать этой проблемы стартанув сначала контейнер с браузером и только потом запуская контейнер с тестами.
+    When starting for the first time, despite the fact that the test container is instructed to wait for the browser 
+    container to start, the tests may still go to the browser that has not yet started. So if all tests fail on the 
+    first run, try restarting only the test container.
 
-Для локального запуска тестов достаточно поднять только контейнер с драйвером, и запускать тесты в IDE.
+    The reason for this is that the wait is implemented at the container level, and the test container starts only 
+    when the browser container is started, but in the started container, the browser itself is still starting. The tests 
+    may be able to start the container and start themselves before the browser is ready, causing the problem.
+    
+    It should be noted separately that such a problem does not arise in CI, as in CI, the browser instances are 
+    correctly started in a separate job preceding the tests.
+
+However, this problem can be avoided by starting the browser container first and only then running the test container.
+
+For local tests start, you just needed to start browser container, install requirements and then you can start tests 
+in IDE.

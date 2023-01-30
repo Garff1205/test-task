@@ -10,57 +10,52 @@ class BaseHelper:
     def __init__(self, app):
         self.app = app
 
-    @allure.step('Поиск элемента')
+    @allure.step('Find element')
     def find_element(self, *locator):
         wd = self.app.wd
         return wd.find_element(*locator)
 
-    @allure.step('Поиск элементов')
+    @allure.step('Find elements')
     def find_elements(self, *locator):
         wd = self.app.wd
         return wd.find_elements(*locator)
 
-    @allure.step('Поиск с ожиданием элемента')
+    @allure.step('Search with element display wait')
     def find_element_with_wait(self, locator):
         return WebDriverWait(self, 20).until(ec.visibility_of_element_located(locator),
-                                             message='Не дождались отображения элемента')
+                                             message='Timeout exited. Element did not displayed')
 
-    @allure.step('Ожидание отображения элемента')
+    @allure.step('Element display wait')
     def wait(self, locator):
         WebDriverWait(self, 20).until(ec.visibility_of_element_located(locator),
-                                      message='Не дождались отображения элемента')
+                                      message='Timeout exited. Element did not displayed')
 
-    @allure.step('Клик по элементу')
+    @allure.step('Element click')
     def click(self, locator):
         self.wait_for_click(locator)
         self.find_element(*locator).click()
 
-    @allure.step('Ожидание кликабельности элемента')
+    @allure.step('Element clickable wait')
     def wait_for_click(self, locator):
         WebDriverWait(self, 45).until(ec.element_to_be_clickable(locator),
-                                      message='Не дождались кликабельности элемента')
+                                      message='Timeout exited. Element did not displayed')
 
-    @allure.step('Ожидание отображения элемента')
-    def wait(self, locator):
-        WebDriverWait(self, 20).until(ec.visibility_of_element_located(locator),
-                                      message='Не дождались отображения элемента')
-
-    @allure.step('Ввод текста в элемент')
+    @allure.step('Send text to the element')
     def send_keys(self, locator, text):
         self.click(locator)
         self.find_element(*locator).send_keys(text)
 
-    @allure.step('Очистить поле ввода')
+    @allure.step('Clear entering field')
     def clear(self, locator):
         self.wait_for_click(locator)
         self.find_element(*locator).send_keys(Keys.CONTROL + "a")
         self.find_element(*locator).send_keys(Keys.DELETE)
 
-    @allure.step('Получение текста элемента')
+    @allure.step('Get element text')
     def get_text(self, locator):
         self.wait(locator)
         return self.find_element(*locator).text
 
-    @allure.step('Принять алерт')
+    @allure.step('Accept alert')
     def accept_alert(self):
         self.app.wd.switch_to.alert.accept()
