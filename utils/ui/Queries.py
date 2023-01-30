@@ -3,22 +3,15 @@ class QueriesCustomers:
 
     @staticmethod
     def GET_BY_CITY(city: str):
-        # Используем небезопасную сборку запроса потому, что эти запросы не общаются к базе данных а лишь печатаются.
-        # Ну и мы пишем тесты, поэтому зачем упрощать жизнь системе и проверять запрос на инъекции за нее)))
+        # We use insecure query creation because they are not sending to db but only wrote to the field.
+        # And this is tests, so it can be another case.
         return f"SELECT * FROM Customers WHERE City = '{city}';"
-
-    # В будуем возможно еще понадобится метод Upsert, тогда можно будет добавить в этот ON CONFLICT DO UPDATE
-    # Либо создать его копию и доработать ее.
 
     @staticmethod
     def GET_BY_CUSTOMER_ID(customer_id: str):
-        # Используем небезопасную сборку запроса потому, что эти запросы не общаются к базе данных а лишь печатаются.
-        # Ну и мы пишем тесты, поэтому зачем упрощать жизнь системе и проверять запрос на инъекции за нее)))
         return f"SELECT * FROM Customers WHERE CustomerID = '{customer_id}';"
 
-    # В будуем возможно еще понадобится метод Upsert, тогда можно будет добавить в этот ON CONFLICT DO UPDATE
-    # Либо создать его копию и доработать ее.
-
+    # Maybe in future we will need upsert method. In that case we can modify this method with ON CONFLICT DO UPDATE.
     @staticmethod
     def ADD_NEW_ROW(table: str, row_data: dict):
         keys = f"({','.join(row_data.keys())})"

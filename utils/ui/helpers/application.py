@@ -34,10 +34,10 @@ class Application:
 
         self.base_url = base_url
 
-    @allure.step("Переход на стартовую страницу")
+    @allure.step("To the start page")
     def open_start_page(self):
         self.wd.get(self.base_url + START_URL)
 
-    @allure.step('Завершение сессии')
+    @allure.step('Session ending')
     def destroy(self):
         self.wd.quit()

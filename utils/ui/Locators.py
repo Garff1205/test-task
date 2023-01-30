@@ -4,9 +4,7 @@ from selenium.webdriver.common.by import By
 class LocatorStart(object):
     RUN_BUTTON = By.CLASS_NAME, 'ws-btn'
     RESTORE_BUTTON = By.ID, 'restoreDBBtn'
-    # используем немного не красивую конструкцию [id=...] вместо #... так как DevTools браузера по запросу #divResultSQL
-    # находит кроме элемента с указанным айдишником еще и стиль с именем #divResultSQL, не уверен что WebDriver не
-    # сделает так же, поэтому перестрахуемся пожертвовав изящностью кода.
+    # We use not so beautiful construction [id=...] instead of #... because such search find styles to.
     RESULT_TABLE = By.CSS_SELECTOR, '[id="divResultSQL"] table'
     YOUR_DB_TABLE = By.CSS_SELECTOR, '[id="yourDB"] table'
     NUMBER_OF_RECORDS = By.CSS_SELECTOR, '[id="divResultSQL"] div[style*="margin-bottom:"]'
