@@ -1,19 +1,29 @@
-To start, simply clone the repository and run the services from the docker_compose file.
+**Task**: Using any programming language, you need to write the following automated tests for the website:
+https://www.w3schools.com/sql/trysql.asp?filename=trysql_select_all
 
-If you run the entire docker-compose at once, you may encounter the following problem:
+1. Select all rows from the Customers table and verify that the record with ContactName = 'Giovanni Rovelli' has Address = 'Via Ludovico il Moro 22'.
+2. Select only the rows from the Customers table where City = 'London'. Verify that there are exactly 6 such records.
+3. Add a new row to the Customers table and check that the row has been successfully inserted.
+4. Update all fields (except CustomerID) in any row of the Customers table and verify that the changes have been saved to the database.
+5. Create your own custom test case and implement it — your imagination is the only limit here.
 
-    When starting for the first time, despite the fact that the test container is instructed to wait for the browser 
-    container to start, the tests may still go to the browser that has not yet started. So if all tests fail on the 
-    first run, try restarting only the test container.
+You can fill the SQL input field using JavaScript code with the window.editor object.
 
-    The reason for this is that the wait is implemented at the container level, and the test container starts only 
-    when the browser container is started, but in the started container, the browser itself is still starting. The tests 
-    may be able to start the container and start themselves before the browser is ready, causing the problem.
-    
-    It should be noted separately that such a problem does not arise in CI, as in CI, the browser instances are 
-    correctly started in a separate job preceding the tests.
+Requirements:
+- You must use Selenium WebDriver for test automation
+- The test code should be uploaded to any Git repository
+- Tests must be runnable inside a Docker container
 
-However, this problem can be avoided by starting the browser container first and only then running the test container.
+**Execution**:
+Run tests in Docker:
+Run `web_driver` service from `docker_compose.yml` first, and then `tests` service.
 
-For local tests start, you just needed to start browser container, install requirements and then you can start tests 
-in IDE.
+Run tests in IDE:
+Run only  `web_driver` service from `docker_compose.yml`
+
+**Troubleshooting**:
+- `All tests fail on the first run`:
+Conditions: First start with docker-compose.
+Solution: Restart only test container. Or start browser container first, then run the tests container.
+Reason: `depends_on` in docker-compose waits only container start. Tests container and tests inside it could together start faster than browser after it's container ready. As a result the tests may go to the browser that has not yet started.
+Note: Such a problem does not reprodice in CI, as in CI, the browser instances are correctly started in a separate job preceding the tests.
